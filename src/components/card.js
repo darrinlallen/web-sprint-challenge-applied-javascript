@@ -1,4 +1,5 @@
 const Card = (article) => {
+
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -17,8 +18,50 @@ const Card = (article) => {
   //   </div>
   // </div>
   //
+  const cardWrapper = document.createElement('div');
+        cardWrapper.classList.add('card')
+  
+  
+let arr =[];
+for (var key in article){
+  arr.push(article[key])
 }
 
+       
+      
+          
+
+  
+        const headline = document.createElement('div')
+        const author = document.createElement('div')
+        const imgContainer = document.createElement('div')
+        const authorPhoto = document.createElement('img')
+        const authorName = document.createElement('span')
+
+        headline.classList.add('headline');
+         author.classList.add('author')
+       imgContainer.classList.add('img-container')
+
+       headline.textContent = article.headline;
+       authorPhoto.src = article.authorPhoto;
+       authorName.textContent = `By ${article.authorName}`
+       
+       cardWrapper.appendChild(headline);
+       author.appendChild(imgContainer)
+       imgContainer.appendChild(authorPhoto)
+       author.appendChild(authorName)  
+       cardWrapper.appendChild(author)
+        
+
+          
+  
+  
+
+      console.log(arr)
+    console.log(cardWrapper);
+    return cardWrapper;
+    }
+    
 const cardAppender = (selector) => {
   // TASK 6
   // ---------------------
@@ -28,6 +71,12 @@ const cardAppender = (selector) => {
   // Create a card from each and every article object in the response, using the Card component.
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
-}
+  axios.get('http://localhost:5001/api/articles')
+  .then( resp => { 
+    document.querySelector(selector).appendChild(Card(resp.data));
+  })
+  .catch(err => console.error(err))
+  }
+
 
 export { Card, cardAppender }
